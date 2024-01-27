@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Import axios library -->
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <!-- Import BOOTSTRAP5 -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <style>
+    .list-group-item.btn {
+      background-color: transparent !important;
+      height: 60px;
+    }
+  
+  
+  </style>
+</head>
+<body>
+
+    <!-- Modals -->
+
+    <!-- Edit Post Modal -->
+    <div class="modal fade modal-lg" id="editPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="ModalTitleLabel">Edit Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+           
+            <form>
+              <div class="mb-3" >
+                <textarea name="" id="postBody" cols="90" rows="4" style="resize: none;"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Select an Image</label>
+                <input  type="file" class="form-control"id="editPostImage">
+              </div>
+              <div id="createPostAlert" style="z-index: 99999;"></div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button onclick="sendEditRequist()" type="button" class="btn btn-primary">Edit</button>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Edit Post Modal -->
+
+    <!-- Delete Post Modal -->
+    <div class="modal fade modal-md" id="deletePostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="ModalTitleLabel">Delete Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>Are you sure ? </h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button onclick="sendDeleteRequiest()" type="button" class="btn btn-danger">Delete</button>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Delete Post Modal -->
+
+
+
+    <!-- // Modals -->
+
+
+
+
+    <div class="container col-10">
+                   <!-- Navigation Bar Div -->
+       <div class="container shadow rounded fixed-top bg-body-tertiary" style="z-index: 100;height: 100px;">
+        <nav class="navbar navbar-expand-lg pt-2  mx-5 bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#" style="font-size: 40px; color: rgb(19, 19, 19);">SHARE SPHERE</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          
+               <div class="d-flex w-100 justify-content-end align-items-center" id="logOutDiv">
+                <button type="button" class="btn btn-outline-danger mx-3"id="logoutButton" onclick="homePage()">Back To Home</button>
+            </div>
+            </div>
+          </nav>
+    </div>
+    <!-- //Navigation Bar Div -->
+
+
+        <div class="row mt-5">
+                <!-- User -->
+                <div class="container col-9" style="height: 1000px;margin-top:40px;margin-left: 100px;">
+                    <!-- USER INFO -->
+                <div  class=" row mt-5">
+                    <div class="card my-5 shadow" style="width: 1000px;">
+                        <div class="card-body">
+                                <div class="row ">
+                                    <!-- Image of the user -->
+                                    <div class="col-4">
+                                        <img id="userImage" src="/profile images/groups img2.jpg" style="width: 100px;height: 100px; border-radius: 50%;" alt="">
+                                    </div>
+                                    <!-- // Image -->
+
+                                    <!-- User data -->
+                                    <div class="col-4 d-flex justify-content-around flex-column">
+                                        <div id="userFirstName">yazan</div>
+                                        <div id="userName">@yazan</div>
+                                        <div id="userEmail">yazan@gmail.com</div>
+                                    </div>
+                                    <!-- // user data -->
+
+                                    <div class="col-4 d-flex justify-content-around flex-column">
+                                            <div><span id="postsCount" style="font-size: 30px;">30</span>Posts</div>
+                                            <div><span id="commentsCount" style="font-size: 30px;">30</span>Comments</div>
+                                    </div>  
+                                </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- USER POSTS -->
+                    <div class="row">
+                        <h1>Posts</h1>
+                        <div id="posts">
+                            <div class="card my-5 shadow">
+                                <div class="card-header">
+                                  <img src="/profile images/bg.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+                                  <b>@ali22</b>
+                                  <p style="margin-left:40px">20 min</p>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-text">hello world</h6>
+                                    <img class="mb-3" src="/profile images/groups img1.jpg" style="width:90%;height: 400px;">
+                                    <hr>
+                                    <div class="d-flex justify-content-center"> 
+                                        <button type="button" class="btn btn-outline-dark mx-5">
+                                          <i class="fas fa-heart"></i>Like(<span class="like-count">${likesCountMap[post.id]}</span>)
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark mx-5">
+                                          <i class="fas fa-comment"></i>Comment(${post.comments_count})
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark mx-5" >
+                                          <i class="fas fa-share"></i>Share
+                                        </button>
+                                    </div>
+                                    <hr>
+                                    <div id="commentsDiv_${post.id}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // USER POSTS -->
+                </div>
+    <!-- // User -->
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="main.js"></script>
+    <script src="profilePage.js"></script>
+</body>
+</html>
